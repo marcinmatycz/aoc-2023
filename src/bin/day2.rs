@@ -20,7 +20,7 @@ fn validate_number_of_cubes(number: &str, color: &str) -> bool {
 fn is_game_possible(line: &str) -> u32 {
     const GAME_ID_TOKEN_INDEX: usize = 1;
     let tokens: Vec<&str> = line.split([' ', ':', ',', ';']).collect();
-    let is_possible = (GAME_ID_TOKEN_INDEX+1..tokens.len())
+    let is_possible = (GAME_ID_TOKEN_INDEX + 1..tokens.len())
         .filter(|&i| tokens[i].to_string().parse::<u32>().unwrap_or(0) >= 12)
         .map(|index| validate_number_of_cubes(tokens[index], tokens[index + 1]))
         .reduce(|a, b| a && b);
@@ -34,8 +34,11 @@ fn is_game_possible(line: &str) -> u32 {
     }
 }
 
+fn calculate_first_part(input: &str) -> u32 {
+    input.lines().map(is_game_possible).sum()
+}
+
 fn main() {
     let input = read_to_string("/home/marcinmatycz/repos/aoc-2023/inputs/day2_input").unwrap();
-    let sum_of_possible_games: u32 = input.lines().map(is_game_possible).sum();
-    println!("{sum_of_possible_games}");
+    println!("{}", calculate_first_part(&input));
 }
