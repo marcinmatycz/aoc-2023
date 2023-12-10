@@ -11,15 +11,17 @@ fn find_calibration_value2(line: &str) -> u32 {
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
     ];
 
-    let digits_representations = SPELLED_DIGITS.iter().enumerate()
+    let digits_representations = SPELLED_DIGITS
+        .iter()
+        .enumerate()
         .map(|(index, spelled_digit)| {
             let digit_value = u32::try_from(index + 1).unwrap();
             let char_digit = char::from_digit(digit_value, 10).unwrap();
             (digit_value, spelled_digit, char_digit)
-
         });
 
-    let first_digit = digits_representations.clone()
+    let first_digit = digits_representations
+        .clone()
         .map(|(digit_value, spelled_digit, char_digit)| {
             let spelled_index = line.find(spelled_digit).unwrap_or(line.len());
             let digit_index = line.find(char_digit).unwrap_or(line.len());
@@ -29,7 +31,7 @@ fn find_calibration_value2(line: &str) -> u32 {
         .unwrap()
         .1;
 
-    let last_digit = digits_representations 
+    let last_digit = digits_representations
         .map(|(digit_value, spelled_digit, char_digit)| {
             let spelled_index = line
                 .rfind(spelled_digit)
